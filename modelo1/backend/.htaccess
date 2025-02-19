@@ -1,0 +1,31 @@
+# Habilitar o CORS
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header set Access-Control-Allow-Headers "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+
+# Configurações de segurança
+Options -Indexes
+ServerSignature Off
+
+# Forçar HTTPS (descomente se estiver usando HTTPS)
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Proteger arquivos sensíveis
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Permitir apenas métodos HTTP específicos
+<LimitExcept GET POST OPTIONS>
+    Deny from all
+</LimitExcept>
+
+# Configurações PHP
+php_flag display_errors off
+php_value error_reporting 0
+php_value session.cookie_httponly 1
+php_value session.cookie_secure 1
+php_value session.use_only_cookies 1
